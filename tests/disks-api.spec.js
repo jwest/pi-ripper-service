@@ -87,6 +87,8 @@ describe('Disks', () => {
         .then((getResponse) => {
           expect(getResponse.statusCode).toBe(200);
           expect(getResponse.body.length).toBe(3);
+          expect(getResponse.body.map(disk => disk.artist))
+            .toEqual(['ARTIST_1', 'ARTIST_2', 'ARTIST_3']);
         })));
 
   beforeEach(() => {
