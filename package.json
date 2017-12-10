@@ -1,0 +1,23 @@
+{
+  "name": "pi-ripper-service",
+  "version": "1.0.0",
+  "description": "service for storage information about ripped cds and show ripping status",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwest/pi-ripper-service.git"
+  },
+  "author": "Jakub Westfalewski",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jwest/pi-ripper-service/issues"
+  },
+  "homepage": "https://github.com/jwest/pi-ripper-service#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
