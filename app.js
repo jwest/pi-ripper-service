@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   res.send({
     links: [
       {
-        rel: 'disk',
+        rel: 'disks',
         href: resourceLink(req, disksApi.ROUTE),
       },
     ],

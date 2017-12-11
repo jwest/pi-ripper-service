@@ -10,7 +10,12 @@ const ROUTE = '/api/v1/disks';
 
 router.get('/', (req, res) => {
   store.getAll('disks').then((disks) => {
-    res.send(disks);
+    res.send(disks.map(disk => Object.assign({}, disk, {
+      links: [{
+        rel: 'disk',
+        href: resourceLink(req, `${ROUTE}/${disk.id}`),
+      }],
+    })));
   });
 });
 
