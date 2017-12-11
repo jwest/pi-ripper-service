@@ -1,5 +1,6 @@
 const express = require('express');
 const uuidv4 = require('uuid/v4');
+const isoDate = require('iso8601-convert');
 
 const store = require('./lib/store');
 const resourceLink = require('./lib/resource-link');
@@ -23,6 +24,7 @@ router.post('/', (req, res) => {
   const id = uuidv4();
   const { body } = req;
   body.id = id;
+  body.updatedAt = isoDate.fromDate(new Date());
   store.put('disks', id, body).then(() => {
     res.append('Location', resourceLink(req, `${ROUTE}/${id}`));
     res.send(body);
@@ -40,6 +42,7 @@ router.put('/:id', (req, res) => {
     .then(() => {
       const { body } = req;
       body.id = req.params.id;
+      body.updatedAt = isoDate.fromDate(new Date());
       return store.put('disks', body.id, body);
     })
     .then(disk => res.send(disk))

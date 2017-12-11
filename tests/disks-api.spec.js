@@ -1,6 +1,8 @@
 const request = require('supertest');
 const app = require('../app');
 const store = require('../lib/store');
+const diskExpect = require('./asserts/disk-expect');
+const linksExpect = require('./asserts/links-expect');
 
 describe('Disks', () => {
   test('should create disk', () =>
@@ -18,7 +20,7 @@ describe('Disks', () => {
           .get(`/api/v1/disks/${id}`)
           .then((getResponse) => {
             expect(getResponse.statusCode).toBe(200);
-            expect(getResponse.body).toEqual({ id, artist: 'ARTIST', title: 'TITLE' });
+            diskExpect(getResponse.body).toEqual({ id, artist: 'ARTIST', title: 'TITLE' });
           })));
 
   test('should update disk', () =>
@@ -37,7 +39,7 @@ describe('Disks', () => {
           .send({ artist: 'ARTIST_UPDATED', title: 'TITLE_UPDATED' })
           .then((putResponse) => {
             expect(putResponse.statusCode).toBe(200);
-            expect(putResponse.body).toEqual({ id, artist: 'ARTIST_UPDATED', title: 'TITLE_UPDATED' });
+            diskExpect(putResponse.body).toEqual({ id, artist: 'ARTIST_UPDATED', title: 'TITLE_UPDATED' });
             return id;
           }))
       .then(id =>
@@ -45,11 +47,7 @@ describe('Disks', () => {
           .get(`/api/v1/disks/${id}`)
           .then((getResponse) => {
             expect(getResponse.statusCode).toBe(200);
-            expect(getResponse.body).toEqual({
-              id,
-              artist: 'ARTIST_UPDATED',
-              title: 'TITLE_UPDATED',
-            });
+            diskExpect(getResponse.body).toEqual({ id, artist: 'ARTIST_UPDATED', title: 'TITLE_UPDATED' });
           })));
 
   test('should delete disk', () =>
@@ -88,8 +86,9 @@ describe('Disks', () => {
           expect(getResponse.statusCode).toBe(200);
           expect(getResponse.body.length).toBe(3);
           getResponse.body.forEach((disk) => {
-            expect(disk.artist.includes('ARTIST_')).toBe(true);
-            expect(disk.links[0].href.includes(`/api/v1/disks/${disk.id}`)).toBe(true);
+            expect(disk.artist.includes('ARTIST')).toBe(true);
+            expect(disk.title.includes('TITLE')).toBe(true);
+            linksExpect(disk).toHaveLink('disk', `/api/v1/disks/${disk.id}`);
           });
         })));
 
