@@ -97,6 +97,42 @@ describe('Disks', () => {
           });
         })));
 
+  test('should get all disk and order by "title"', () =>
+    Promise.all([
+      request(app).post('/api/v1/disks')
+        .send({ artist: 'ARTIST_1', title: 'TITLE_1' }),
+      request(app).post('/api/v1/disks')
+        .send({ artist: 'ARTIST_2', title: 'TITLE_2' }),
+      request(app).post('/api/v1/disks')
+        .send({ artist: 'ARTIST_3', title: 'TITLE_3' }),
+    ]).then(() =>
+      request(app)
+        .get('/api/v1/disks?sort=title')
+        .then((getResponse) => {
+          expect(getResponse.statusCode).toBe(200);
+          expect(getResponse.body.map(disk => disk.title)).toEqual([
+            'TITLE_1', 'TITLE_2', 'TITLE_3',
+          ]);
+        })));
+
+  test('should get all disk and order by "title DESC"', () =>
+    Promise.all([
+      request(app).post('/api/v1/disks')
+        .send({ artist: 'ARTIST_1', title: 'TITLE_1' }),
+      request(app).post('/api/v1/disks')
+        .send({ artist: 'ARTIST_2', title: 'TITLE_2' }),
+      request(app).post('/api/v1/disks')
+        .send({ artist: 'ARTIST_3', title: 'TITLE_3' }),
+    ]).then(() =>
+      request(app)
+        .get('/api/v1/disks?sort=title&order=desc')
+        .then((getResponse) => {
+          expect(getResponse.statusCode).toBe(200);
+          expect(getResponse.body.map(disk => disk.title)).toEqual([
+            'TITLE_3', 'TITLE_2', 'TITLE_1',
+          ]);
+        })));
+
   beforeEach(() => {
     store.clear('disks');
   });

@@ -10,14 +10,15 @@ const router = express.Router();
 const ROUTE = '/api/v1/disks';
 
 router.get('/', (req, res) => {
-  store.getAll('disks').then((disks) => {
-    res.send(disks.map(disk => Object.assign({}, disk, {
-      links: [{
-        rel: 'disk',
-        href: resourceLink(req, `${ROUTE}/${disk.id}`),
-      }],
-    })));
-  });
+  store.getAll('disks', req.query.sort, req.query.order)
+    .then((disks) => {
+      res.send(disks.map(disk => Object.assign({}, disk, {
+        links: [{
+          rel: 'disk',
+          href: resourceLink(req, `${ROUTE}/${disk.id}`),
+        }],
+      })));
+    });
 });
 
 router.post('/', (req, res) => {
