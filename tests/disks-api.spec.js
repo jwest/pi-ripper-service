@@ -20,7 +20,8 @@ describe('Disks', () => {
           .get(`/api/v1/disks/${id}`)
           .then((getResponse) => {
             expect(getResponse.statusCode).toBe(200);
-            diskExpect(getResponse.body).toEqual({ id, artist: 'ARTIST', title: 'TITLE' });
+            diskExpect(getResponse.body)
+              .toEqual({ id, artist: 'ARTIST', title: 'TITLE' });
           })));
 
   test('should update disk', () =>
@@ -39,7 +40,8 @@ describe('Disks', () => {
           .send({ artist: 'ARTIST_UPDATED', title: 'TITLE_UPDATED' })
           .then((putResponse) => {
             expect(putResponse.statusCode).toBe(200);
-            diskExpect(putResponse.body).toEqual({ id, artist: 'ARTIST_UPDATED', title: 'TITLE_UPDATED' });
+            diskExpect(putResponse.body)
+              .toEqual({ id, artist: 'ARTIST_UPDATED', title: 'TITLE_UPDATED' });
             return id;
           }))
       .then(id =>
@@ -47,7 +49,8 @@ describe('Disks', () => {
           .get(`/api/v1/disks/${id}`)
           .then((getResponse) => {
             expect(getResponse.statusCode).toBe(200);
-            diskExpect(getResponse.body).toEqual({ id, artist: 'ARTIST_UPDATED', title: 'TITLE_UPDATED' });
+            diskExpect(getResponse.body)
+              .toEqual({ id, artist: 'ARTIST_UPDATED', title: 'TITLE_UPDATED' });
           })));
 
   test('should delete disk', () =>
@@ -76,9 +79,12 @@ describe('Disks', () => {
 
   test('should get all disk', () =>
     Promise.all([
-      request(app).post('/api/v1/disks').send({ artist: 'ARTIST_1', title: 'TITLE_1' }),
-      request(app).post('/api/v1/disks').send({ artist: 'ARTIST_2', title: 'TITLE_2' }),
-      request(app).post('/api/v1/disks').send({ artist: 'ARTIST_3', title: 'TITLE_3' }),
+      request(app).post('/api/v1/disks')
+        .send({ artist: 'ARTIST_1', title: 'TITLE_1' }),
+      request(app).post('/api/v1/disks')
+        .send({ artist: 'ARTIST_2', title: 'TITLE_2' }),
+      request(app).post('/api/v1/disks')
+        .send({ artist: 'ARTIST_3', title: 'TITLE_3' }),
     ]).then(() =>
       request(app)
         .get('/api/v1/disks')
@@ -86,8 +92,7 @@ describe('Disks', () => {
           expect(getResponse.statusCode).toBe(200);
           expect(getResponse.body.length).toBe(3);
           getResponse.body.forEach((disk) => {
-            expect(disk.artist.includes('ARTIST')).toBe(true);
-            expect(disk.title.includes('TITLE')).toBe(true);
+            diskExpect(disk).toSimilar({ artist: 'ARTIST', title: 'TITLE' });
             linksExpect(disk).toHaveLink('disk', `/api/v1/disks/${disk.id}`);
           });
         })));

@@ -7,4 +7,9 @@ module.exports = actual => ({
     expect(actual.title).toBe(expected.title);
     expect(isoDate.toDate(actual.updatedAt).getTime() <= Date.now()).toBe(true);
   },
+  toSimilar: (expected) => {
+    expect(actual.artist.includes(expected.artist)).toBe(true);
+    expect(actual.title.includes(expected.title)).toBe(true);
+    expect(isoDate.toDate(actual.updatedAt).getTime() <= Date.now()).toBe(true);
+  },
 });
