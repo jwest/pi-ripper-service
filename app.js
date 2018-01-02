@@ -8,7 +8,9 @@ const disksApi = require('./disks-api');
 const app = express();
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+app.use(express.static('build'));
+
+app.get('/api/v1', (req, res) => {
   res.send({
     links: [
       {

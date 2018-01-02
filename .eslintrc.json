@@ -5,5 +5,8 @@
     "test": true,
     "expect": true,
     "beforeEach": true
-  }
+  },
+  "plugins": [
+    "react", "jsx"
+  ]
 }

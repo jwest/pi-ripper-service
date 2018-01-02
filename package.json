@@ -4,8 +4,8 @@
   "description": "service for storage information about ripped cds and show ripping status",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "jest && npm run lint",
+    "start": "react-scripts build && node index.js",
+    "test": "react-scripts test --env=jsdom && npm run lint",
     "lint": "./node_modules/.bin/eslint -c ./.eslintrc.json . --fix"
   },
   "repository": {
@@ -17,19 +17,25 @@
   "bugs": {
     "url": "https://github.com/jwest/pi-ripper-service/issues"
   },
-  "homepage": "https://github.com/jwest/pi-ripper-service#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "iso8601-convert": "^1.0.0",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "material-ui": "^1.0.0-beta.22",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.0.17"
   },
   "devDependencies": {
     "eslint": "^4.13.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "jest": "^21.2.1",
+    "eslint-plugin-jsx": "0.0.2",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
     "supertest": "^3.0.0"
   }
 }
