@@ -4,7 +4,8 @@
   "description": "service for storage information about ripped cds and show ripping status",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts build && node index.js",
+    "start": "node index.js",
+    "postinstall": "react-scripts build",
     "test": "react-scripts test --env=jsdom && npm run lint",
     "lint": "./node_modules/.bin/eslint -c ./.eslintrc.json . --fix"
   },
