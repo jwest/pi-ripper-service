@@ -1,5 +1,10 @@
 All soft required for install whipper (https://github.com/JoeLametta/whipper)
 
+### @TODO
+ - [ ] move to pi-ripper service as install process
+
+### Commands
+
 ```bash
 
 git clone -b master --single-branch https://github.com/JoeLametta/whipper.git
