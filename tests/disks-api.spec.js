@@ -135,6 +135,26 @@ describe('Disks', () => {
               ]);
             })));
     });
+
+    describe('limit', () => {
+      test('should get one disk and order by "title"', () =>
+        Promise.all([
+          request(app).post('/api/v1/disks')
+            .send({ artist: 'ARTIST_1', title: 'TITLE_1' }),
+          request(app).post('/api/v1/disks')
+            .send({ artist: 'ARTIST_2', title: 'TITLE_2' }),
+          request(app).post('/api/v1/disks')
+            .send({ artist: 'ARTIST_3', title: 'TITLE_3' }),
+        ]).then(() =>
+          request(app)
+            .get('/api/v1/disks?limit=1&sort=title&order=desc')
+            .then((getResponse) => {
+              expect(getResponse.statusCode).toBe(200);
+              expect(getResponse.body.map(disk => disk.title)).toEqual([
+                'TITLE_3',
+              ]);
+            })));
+    });
   });
 
   beforeEach(() => {

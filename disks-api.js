@@ -10,7 +10,7 @@ const router = express.Router();
 const ROUTE = '/api/v1/disks';
 
 router.get('/', (req, res) => {
-  store.getAll('disks', req.query.sort, req.query.order)
+  store.getAll('disks', req.query.sort, req.query.order, req.query.limit)
     .then((disks) => {
       res.send(disks.map(disk => Object.assign({}, disk, {
         links: [{

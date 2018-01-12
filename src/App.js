@@ -7,7 +7,7 @@ class App extends React.Component {
 
   componentDidMount() {
     setInterval(() => {
-      fetch('/api/v1/disks?sort=updatedAt&order=desc')
+      fetch('/api/v1/disks?sort=updatedAt&order=desc&limit=1')
         .then(res => res.json())
         .then(body => {
           this.setState({disks: body});
